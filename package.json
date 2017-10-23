@@ -1,0 +1,28 @@
+{
+  "name": "chatBot",
+  "description": "Cih M3ak ChatBot",
+  "author": "khaoula tanfioui",
+  "email": "khaoulatanfioui@gmail.com",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/assistantbot_Team/assistantBot"
+  },
+  "license": "private",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "dotenv": "^2.0.0",
+    "express": "^4.14.0",
+    "express-session": "^1.15.5",
+    "watson-developer-cloud": "^2.8.1",
+    "@google-cloud/translate " : "1.0.0"
+  },
+  "engines": {
+    "node": ">= 4.x.x",
+    "npm": "> 4.x.x"
+  }
+}

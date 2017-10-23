@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>title</title>
+    <link rel="icon" href="src/img/icon.png">
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <!-- font-awesome -->
+    <link rel="stylesheet" href="src/css/font-awesome-4.6.3/css/font-awesome.min.css">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="src/css/materialize.min.css"  media="screen,projection"/>
+    <!-- animate css -->
+    <link rel="stylesheet" href="src/css/animate.css-master/animate.min.css">
+    <!-- My own style -->
+    <link rel="stylesheet" href="src/css/style.css">
+    <link rel="stylesheet" href="src/css/MyStyle.css">
+    <!-- OwlCarousel2 css -->
+    <link rel="stylesheet" href="src/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="src/css/owl.theme.default.min.css">
+  </head>
+  <body>
+<header>
+  <nav>
+    <a href="#" class="brand-logo center" style="margin-top: -72px;">WafaCash M3Ak</a>
+  </nav>
+</header>
+<main>
+  <!--################################################################################################################-->
+  <div class="robot"><embed src="src/img/robot.svg"></div></div>
+  <div id="contentParent" class="responsive-columns-wrapper">
+    <div id="chat-column-holder" class="responsive-column content-column">
+      <div class="chat-column">
+        <div id="scrollingChat"></div>
+        <label for="textInput" class="inputOutline">
+          <input id="textInput" class="input responsive-column"
+            placeholder="Please type something..." type="text"
+            onkeydown="ConversationPanel.inputKeyDown(event, this)">
+        </label>
+      </div>
+    </div>
+  </div>
+  <!--################################################################################################################-->
+</main>
+<footer class="page-footer">
+  <div class="footer-copyright">
+    <div class="container center-align">
+      WafaCash | All rights reserved © 2017
+    </div>
+  </div>
+</footer>
+<!-- JQUERY FIRST -->
+<script src="src/js/jquery-2.1.4.js"></script>
+<!-- wow js-->
+<script src="src/js/wow.min.js"></script>
+<script src="src/js/script.js"></script>
+<!-- Owlcarousel Js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.1/owl.carousel.min.js"></script>
+<!-- Materialize Js -->
+<script src="src/js/materialize.min.js"></script>
+<script src="src/js/common.js"></script>
+<script src="src/js/api.js"></script>
+<script src="src/js/conversation.js"></script>
+<script src="src/js/global.js"></script>
+<script>
+<!-- //SMOOTH SCROLL -->
+$(document).on('click', 'a[href*="#"]:not([href="#"])', function(e) {
+  if (location.pathname.replace(/^\//,'') === this.pathname.replace(/^\//,'') && location.hostname === this.hostname) {
+    var target = $(this.hash);
+    target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+    if (target.length && target.selector.indexOf("#top") > -1) {
+      $('html, body').animate({
+        scrollTop: (target.offset().top-55)
+      }, 1000);
+      e.preventDefault();
+    }
+    else if (target.length && target.selector.indexOf("#top") < 1 && target.selector != '') {
+      $('html, body').animate({
+        scrollTop: target.offset().top
+      }, 1000);
+      e.preventDefault();
+    }
+  }
+});
+<!-- //SMOOTH SCROLL -->
+
+
+new WOW().init();
+
+$(document).ready(function(){
+  $('.materialboxed').materialbox();
+});
+
+$(document).ready(function() {
+    $('select').material_select();
+  });
+
+$('.button-collapse').sideNav({
+  menuWidth: 300, // Default is 240
+  edge: 'left', // Choose the horizontal origin
+  closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
+}
+);
+</script>
+</body>
+</html>

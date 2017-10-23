@@ -1,0 +1,90 @@
+.mTable{
+    border-radius: 15px;
+	border: 3px solid #E0E0E0;
+}
+.mTableTh1{
+background-image:url(../img/cashExpress.png);
+border-radius: 15px;
+height:200px;
+width:300px;
+}
+
+.mTableTh2{
+background-image:url(../img/hissabBikhir.png);
+border-radius: 15px;
+height:200px;
+width:300px;
+}
+
+.mTableTh3{
+background-image:url(../img/floussy.png);
+border-radius: 15px;
+height:200px;
+width:300px;
+}
+
+.mTableTh4{
+background-image:url(../img/changeManuel.png);
+border-radius: 15px;
+height:200px;
+width:300px;
+}
+
+.mTableTh5{
+background-image:url(../img/serviceCash.png);
+border-radius: 15px;
+height:200px;
+width:300px;
+}
+
+.mTd1{
+	height:50px;
+	border: 3px solid #E0E0E0;
+	border-radius: 15px;
+}
+
+.mHref{
+font-weight: bold;
+	text-align: right;
+	color:#eab221;
+	font-size:16px
+}
+
+.pLink{
+	font-weight: bold;
+	text-align: right;
+}
+
+.pTitle{
+    color: black;
+    font-family: verdana;
+    font-size: 80%;
+	font-weight: bold;
+
+}
+.pDesc  {
+    color: gray;
+    font-family: verdana;
+    font-size: 70%;
+	line-height: 90%;
+}
+
+.w3-display-rightt{
+    position:absolute;
+	top:50%;
+	right:69.5%;
+	transform:translate(0%,-50%);
+	-ms-transform:translate(0%,-50%)
+}
+
+.w3-content{max-width:980px;margin:auto}.w3-rest{overflow:hidden}
+
+.w3-display-container:hover .w3-display-hover{display:block}.w3-display-container:hover span.w3-display-hover{display:inline-block}.w3-display-hover{display:none}
+
+.w3-tooltip,.w3-display-container{position:relative}.w3-tooltip .w3-text{display:none}.w3-tooltip:hover .w3-text{display:inline-block}
+
+.w3-black,.w3-hover-black:hover{color:#fff!important;background-color:#000!important}
+
+.w3-btn,.w3-button{border:none;display:inline-block;outline:0;padding:8px 16px;vertical-align:middle;overflow:hidden;text-decoration:none;color:inherit;background-color:inherit;text-align:center;cursor:pointer;white-space:nowrap}
+
+.w3-display-left{position:absolute;top:50%;left:0%;transform:translate(0%,-50%);-ms-transform:translate(-0%,-50%)}

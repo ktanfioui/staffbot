@@ -1,0 +1,26 @@
+// vaiables
+
+$primary: #252742;
+$secondary: #6a27a3;
+$black: #212121;
+$white: #fff;
+$gradient1: #1A2980;
+$gradient2: #26D0CE;
+
+$twitter: #1da1f2;
+$linkedin: #0077b5;
+$fb: #3b5999;
+
+@mixin mQ($arg){
+  @media screen and (max-width: $arg){
+    @content;
+  }
+}
+
+@mixin clearfix{
+  &:after{
+    content: "";
+    display: block;
+    clear: both;
+  }
+}
