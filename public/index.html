@@ -8,57 +8,43 @@
 </head>
 
 
-  <body>
-<div class="container">
-		<div class="imgcontainer">
-		<img src="img/wafacashbot.png" alt="Avatar" class="avatar">
-		</div>
-	<section id="content">
-		<form method='GET' action="/api/message">
-			<h1>Wafa Cash Bot</h1>
-			<input type="radio" name="gender" value="male" required> Mr
-			<input type="radio" name="gender" value="female"> Mme
-			<input type="radio" name="gender" value="other"> Mlle<br/><br>
-			<div>
-				<input type="text" placeholder="Prénom" required="" id="prenom" name="prenom" />
-			</div>
-			<div>
-				<input type="text" placeholder="Nom" required="" id="nom" name="nom" />
-			</div>
-			<div>
-				<input type="email" placeholder="Email" required="" id="email" name="email"/>
-			</div>
-			<div>
-				<input type="number" placeholder="Téléphone" required="" id="tel" name="tel"/>
-			</div>
+<body>
+<div class="login">
+  <div class="login-screen">
+    <div class="imgcontainer">
+      <img src="img/wafacashbot.png" alt="Avatar" class="avatar">
+    </div>
 
-			<div>
-			  <select name="objet" id="objet" required>
-			    <option value="" selected disabled hidden>Sélectionnez votre objet</option>
-				<option value="information">Information</option>
-				<option value="produits">Produits</option>
-				<option value="réclamation">Réclamation</option>
-				<option value="autres">Autres</option>
-			  </select>
-			</div>
-      <div>
-			  <select name="langue" id="langue" required>
-			    <option value="" selected disabled hidden>Sélectionnez votre langue</option>
-				<option value="fr">Français</option>
-				<option value="ar"> العربية </option>
-			  </select>
-			</div>
+    <div class="app-title">
+      <h1>Se connecter</h1>
+    </div>
+    <form method='GET' action="/api/message">
+    <div class="login-form">
+      <div class="control-group">
+      <input type="text" class="login-field" placeholder="Matricule" required="" id="matricule" name="matricule" />
 
-			<div>
-				<center><input type="submit" value="login" /></center>
+      <label class="login-field-icon fui-user" for="Matricule"></label>
+      </div>
 
-			</div>
+      <div class="control-group">
+      <input type="text" class="login-field" placeholder="Code agence" required="" id="codeagence" name="codeagence" />
+      <label class="login-field-icon fui-lock" for="codeagence"></label>
+      </div>
+    <div>
+      <select name="objet" class="select" id="objet" required>
+        <option value="" selected disabled hidden style="color:#777;">Sélectionnez votre objet</option>
+      <option value="Demande d'information">Demande d'information</option>
+      <option value="Réclamation agence">Réclamation agence</option>
+      <option value="Réclamation Client">Réclamation client </option>
+      </select>
+      <p></p>
 
-
-		</form><!-- form -->
-
-	</section><!-- content -->
-</div><!-- container -->
+    </div>
+    <input type="submit" value="Se connecter" class="btn btn-primary btn-large btn-block" syle="color:#777"/>
+    </div>
+  </form>
+  </div>
+</div>
 </body>
 
 </html>

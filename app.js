@@ -1,12 +1,16 @@
 'use strict';
-
+//var mongoClient = require('mongodb').MongoClient; // Récupération du client mongodb
+var identifiant = require('./uniqid.js');
+var nodemailer = require('nodemailer');
+var dateTime = require('node-datetime');
 var express = require('express'),
 app = express(),
     session = require('express-session');
  // app server
 var bodyParser = require('body-parser'); // parser for post requests
 var Conversation = require('watson-developer-cloud/conversation/v1'); // watson sdk
-
+var dt = dateTime.create();
+var dateRec = dt.format('d-m-Y');
 
 app.use(express.static('./public'));
 app.use(bodyParser.json());
@@ -31,15 +35,31 @@ var auth = function(req, res, next) {
     return res.sendStatus(401);
 };
 
+//////generating the id in case of complaint
+var reclamationID = identifiant.uniqID();
+console.log(reclamationID);
+
+//////Initialiser les variables du client
+var matricule = null;
+var codeagence = null;
 var prenom = null;
+var email = "k.lahlou@wafacash.com";
 var objet = null;
-var langue = null;
+var mailOptions = null;
 // Login endpoint
 app.get('/api/message', function (req, res) {
-  prenom = req.query.prenom;
+  matricule = req.query.matricule;
+  codeagence = req.query.codeagence;
   objet = req.query.objet;
-  langue = req.query.langue;
-  console.log(langue);
+  console.log(objet);
+  mailOptions = {
+    from: 'khaoulatanfioui@gmail.com',
+    to: email,
+    subject: 'Accusée de reception de votre réclamation Wafacash',
+    html: '<html><body> Bonjour ' + prenom + ', <br> Nous accusons réception de votre réclamation datée du: ' + dateRec + ' portant le numéro de ticket: ' + reclamationID + '<br>Pour un suivi en temps réel de votre réclamation, merci de vous connectez et saisir votre numéro de ticket via le lien suivant : <br><br>Pour plus d’informations, veuillez contacter le Centre Service Client au 05 22 43 50 50.</body></html>'
+  };
+  //insertClient(nom, prenom, email, tel, objet, langue);
+  //console.log(langue);
 	var username = "WafaCashBot";
   //exports.nom = nom;
 	var pswd = "wafacashbot**2017";
@@ -65,9 +85,6 @@ app.get("/conversation", auth, function (request, response){
 })
 
 //////////////////index end
-
-
-
 var conversation = new Conversation({
   version_date: Conversation.VERSION_DATE_2017_04_21
 });
@@ -75,10 +92,7 @@ var conversation = new Conversation({
 app.post('/api/message', function(req, res) {
 //////Language detection and right workspace choice
   var workspace = null;
-  if(langue == 'fr')
-  { workspace = process.env.WORKSPACE_ID1 || '<workspace-id>';}
-  if(langue == 'ar')
-  { workspace = process.env.WORKSPACE_ID2 || '<workspace-id>';}
+ workspace = process.env.WORKSPACE_ID1 || '<workspace-id>';
 
   if (!workspace || workspace === '<workspace-id>') {
     return res.json({
@@ -94,15 +108,20 @@ app.post('/api/message', function(req, res) {
     context: req.body.context || {},
     input: req.body.input || iinput
   };
-
+///////les variables de reclamation
   // Send the input to the conversation service
+
+
   conversation.message(payload, function(err, data) {
     if (err) {
       return res.status(err.code || 500).json(err);
     }
     else{
+
+
     var reponse = null;
     ///////Greetings with user's name
+
       if(data.output.text[0] == "Salut"){
       var reptext = data.output.text[0] + ' ' + prenom;
       var reponse = {
@@ -130,16 +149,129 @@ app.post('/api/message', function(req, res) {
               }
             }
         }
+       ///////////Réclamation
+        /*else if (data.output.text[0] == "reclamation") {
+          var reptext = "<html><body> <p>Laquelle de ces de options votre réclamation concerne ?</p>  <button class='button button5'>Qualité de service</button> <button class='button button5'>Nos produits wafacash</button>  </body> </html>";
+          var reponse = {
+              "output" : {
+                "text" : reptext,
+              }
+            }
+        }*/
+
+        else if (data.output.text[0] == "<html><body>pouvez vous m'envoyer l'adresse de l'agence où s'est produit le problème?  par exemple:</br> adresse agence : Bir Anzarane Quartier Maarif, Casablanca </body></html>") {
+          console.log("categLibelle : qualité de service");
+          //var reptext = "Pouvez vous m'envoyer l'adresse de l'agence où vous aviez le problème ?";
+          var reponse = data;
+
+        }
+        else if (data.output.text[0] == "produits wafacash") {
+          var reptext = "<html><body> <p>Lequel de cess produits vous avez un problème avec ?</p> <button>Cash Express</button> <button>Carte Hissab Bikhir</button></body> </html>";
+          var reponse = {
+              "output" : {
+                "text" : reptext,
+              }
+            }
+        }
+        else if (data.output.text[0] == "<html>y> Envoyez moi une description détaillée des faits, comme suit par exemple:</br> description : Changement support hissab bikhir </body></html>") {
+          var address = data.output.context.adresse_entite;
+          console.log(address);
+          //reptext = "<html><body> D'accord, envoyer moi maintenant une description détaillé de ce qui s'est passé, par exemple:</br> description : j'ai été maltraitée par l'agent de sécurité </body></html>";
+          var reponse = data;
+        }
+        else if (data.output.text[0] == "accusee de reception") {
+          var descr = data.output.context.type_descr;
+          console.log( descr);
+          console.log("numero de ticket : " + reclamationID);
+          sendEmail(mailOptions);
+          reptext = "Merci, nous vous accusons reception de votre réclamation, voici votre N° de ticket: " + reclamationID +" nous vous enverrons un mail une fois votre réclamation sera traitée";
+          var reponse = {
+              "output" : {
+                "text" : reptext,
+              }
+            }
+        }
+
 
 
   else {reponse = data;}
-
       return res.json(updateMessage(payload, reponse));
     }
+
     //console.log('Bonjour ' + prenom + ', ' + data.output.text[0]);
 //return res.json(updateMessage(payload, data));
   });
+
 });
+
+function insertClient(nom, prenom, email, tel, objet, langue) {
+  var url = 'mongodb://localhost/mydb';
+
+      // Connexion au serveur avec la méthode connect
+      mongoClient.connect(url, function (err, db) {
+          if (err) {
+              return console.error('Connection failed', err);
+          }
+          console.log('Connection successful on ', url);
+
+          // Nous allons travailler ici ...
+          // Récupération de la collection clients
+      var collection = db.collection('clients');
+      var client = {nom: nom, prenom: prenom, email: email, tel: tel, objet: objet, langue: langue};
+      collection.update(client, { "$set": client}, { "upsert": true });
+      db.close();
+     });
+}
+
+function insertReclamation(id, categLibelle, entite, type, callback){
+  var url = 'mongodb://localhost/mydb';
+      mongoClient.connect(url, function (err, db) {
+          if (err) {
+              return console.error('Connection failed', err);
+          }
+          console.log('Connection successful on ', url);
+      var collection = db.collection('reclamations');
+      var reclamation = {_id: id, categLibelle: categLibelle, entite: entite, type: type };
+      collection.update(reclamation, { _id: reclamationID}, { "upsert": true });
+      db.close();
+      callback();
+     });
+
+}
+
+function generateId(){
+  var a = Math.floor((Math.random() * 5000) + 1);
+  return a;
+  //console.log("the random number is : " + a);
+}
+
+
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'khaoulatanfioui@gmail.com',
+    pass: 'papaetmaman155'
+  }
+});
+function sendEmail(mailData){
+	transporter.sendMail(mailOptions, function(error, info){
+  if (error) {
+    console.log(error);
+  } else {
+    console.log('Email sent');
+  }
+});
+}
+
+
+
+
+
+
+
+
+
+
 
 
 function updateMessage(input, response) {

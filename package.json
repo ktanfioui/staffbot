@@ -14,12 +14,14 @@
   },
   "license": "private",
   "dependencies": {
+    "@google-cloud/translate ": "1.0.0",
     "body-parser": "^1.15.2",
     "dotenv": "^2.0.0",
     "express": "^4.14.0",
     "express-session": "^1.15.5",
-    "watson-developer-cloud": "^2.8.1",
-    "@google-cloud/translate " : "1.0.0"
+    "node-datetime": "^2.0.3",
+    "nodemailer": "^4.3.1",
+    "watson-developer-cloud": "^2.8.1"
   },
   "engines": {
     "node": ">= 4.x.x",
